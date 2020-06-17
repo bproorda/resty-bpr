@@ -6,7 +6,7 @@ import './app.scss';
 // There's pros and cons for each way of doing this ...
 import Header from './components/header';
 import Footer from './components/footer';
-import Form from './components/form/form.js';
+import Form from './components/form/';
 
 class App extends React.Component {
   render() {

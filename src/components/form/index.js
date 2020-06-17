@@ -55,6 +55,7 @@ class Form extends React.Component {
           <label >
             <span>URL: </span>
             <input name='url' type='text' onChange={this.handleChangeURL} />
+            <p>{this.state.method}</p>
             <button type="submit">GO!</button>
           </label>
           <label className="methods">
