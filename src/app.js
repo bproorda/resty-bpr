@@ -9,6 +9,16 @@ import Footer from './components/footer';
 import Form from './components/form/';
 
 class App extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      Count: null,
+      Results: [],
+    };
+  }
+
+
   render() {
     return (
       <React.Fragment>
