@@ -1,2 +1,0 @@
-# resty-bpr
-RESTy
