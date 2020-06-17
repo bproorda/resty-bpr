@@ -20,5 +20,10 @@ describe('<Form />', () => {
         expect(app.state('url')).toBe('abc');
     });
 
-    
+    it('search box changes url state', () => {
+        let app = mount(<Form />);
+        let input = app.find('span#get');
+        input.simulate('click');
+        expect(app.state('method')).toBe('get');
+    });
 });
