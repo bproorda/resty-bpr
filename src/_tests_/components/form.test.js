@@ -20,20 +20,21 @@ describe('<Form />', () => {
         expect(app.state('url')).toBe('abc');
     });
 
-    it('search box changes url state', () => {
+    it('method click changes method state', () => {
         let app = mount(<Form />);
         let input = app.find('span#get');
         input.simulate('click');
         expect(app.state('method')).toBe('get');
     });
 
-    // it('search box clears after submit', () => {
-    //     let app = mount(<Form />);
-    //     let input = app.find('input');
-    //     input.simulate('change', { target: { value: 'abc' } });
-    //     let input2 = app.find('span#get');
-    //     input2.simulate('click');
-    //     input.simulate('submit');
-    //     expect(input.value).toBe('');    
-    // })
+    it('search box clears after submit', () => {
+        let app = mount(<Form />);
+        let input = app.find('input');
+        input.simulate('change', { target: { value: 'abc' } });
+        let input2 = app.find('span#get');
+        input2.simulate('click');
+        let form = app.find('form');
+        form.simulate('submit', {preventDefault () {} });
+        expect(input.props().value).toBeFalsy();    
+    })
 });
