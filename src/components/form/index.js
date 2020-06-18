@@ -16,7 +16,8 @@ class Form extends React.Component {
 async getData() {
   let result = await fetch(this.state.url);
   let data = await result.json();
-  
+  //console.log(data);
+  this.props.saveData(data);
 };
 
   handleSubmit = e => {
@@ -63,6 +64,7 @@ async getData() {
             <input name='url' type='text' onChange={this.handleChangeURL} />
             <button type="submit">GO!</button>
           </label>
+          <p>Test URL for GET: https://official-joke-api.appspot.com/jokes/programming/ten</p>
           <label className="methods">
             <span className={this.state.method === 'get' ? 'active' : ''} id="get" onClick={this.handleChangeMethod}>GET</span>
             <span className={this.state.method === 'post' ? 'active' : ''} id="post" onClick={this.handleChangeMethod}>POST</span>

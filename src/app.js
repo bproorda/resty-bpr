@@ -18,12 +18,15 @@ class App extends React.Component {
     };
   }
 
-
+getFormData = data => {
+  this.setState({Results: data});
+  console.log(this.state.Results);
+}
   render() {
     return (
       <React.Fragment>
         <Header />
-        <Form />
+        <Form saveData = {this.getFormData}/>
         <Footer />
       </React.Fragment>
     );
