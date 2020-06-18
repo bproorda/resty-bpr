@@ -10,6 +10,7 @@ class Form extends React.Component {
       url: '',
       method: '',
       request: {},
+    
     };
   }
 
@@ -18,6 +19,8 @@ async getData() {
   let data = await result.json();
   //console.log(data);
   this.props.saveData(data);
+
+  
 };
 
   handleSubmit = e => {
