@@ -11,7 +11,7 @@ export default function Results(props) {
         <>
         <h2>Results: </h2>
             <span>
-                <ReactJson src={props.data} theme="monokai" />
+                <ReactJson src={ props.data} theme="monokai" />
             </span>
         </>
     )

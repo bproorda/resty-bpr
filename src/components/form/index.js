@@ -17,21 +17,21 @@ class Form extends React.Component {
 
 async getData() {
   let result = await fetch(this.state.url)
-  .then(function(Response) {
+  .then(async function(Response) {
     //console.log(Response);
     let headers = [];
     for (var pair of Response.headers.entries()) { // accessing the entries
   
       headers.push(pair);
     }
-    let finalAnswer = [Response.json(), headers];
+    let finalAnswer = { headersJson : headers,  bodyJson :await Response.json()};
     console.log(finalAnswer);
     //this.setState({headers})
     //return Response.json();
-    return finalAnswer[0];
+    return finalAnswer;
   });
   //let data = await result.json();
-  this.props.saveData(result);
+  this.props.saveData( await result);
 
   
 };
