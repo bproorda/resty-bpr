@@ -20,11 +20,12 @@ async getData() {
   .then(async function(Response) {
     //console.log(Response);
     let headers = [];
+    let status = Response.status;
     for (var pair of Response.headers.entries()) { // accessing the entries
   
       headers.push(pair);
     }
-    let finalAnswer = { headersJson : headers,  bodyJson :await Response.json()};
+    let finalAnswer = {status: status, headersJson : headers,  bodyJson :await Response.json()};
     console.log(finalAnswer);
     //this.setState({headers})
     //return Response.json();
