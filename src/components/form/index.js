@@ -11,7 +11,6 @@ class Form extends React.Component {
       method: '',
       request: {},
       body: {},
-      headers:[],
     
     };
   }
@@ -19,19 +18,19 @@ class Form extends React.Component {
 async getData() {
   let result = await fetch(this.state.url)
   .then(function(Response) {
+    //console.log(Response);
+    let headers = [];
     for (var pair of Response.headers.entries()) { // accessing the entries
-      if (pair[0] === 'x-total-count') { // key I'm looking for in this instance
-      let arr = [];
-      arr.push(pair[1]);
-        this.setState({
-          headers: arr // saving that value where I can use it
-        })
-      }
+  
+      headers.push(pair);
     }
-    return Response.json();
+    let finalAnswer = [Response.json(), headers];
+    console.log(finalAnswer);
+    //this.setState({headers})
+    //return Response.json();
+    return finalAnswer[0];
   });
   //let data = await result.json();
-  console.log(this.state.headers);
   this.props.saveData(result);
 
   
