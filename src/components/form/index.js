@@ -10,8 +10,32 @@ class Form extends React.Component {
       url: '',
       method: '',
       request: {},
+      body: {},
+    
     };
   }
+
+async getData() {
+  let result = await fetch(this.state.url)
+  .then(async function(Response) {
+    //console.log(Response);
+    let headers = [];
+    let status = Response.status;
+    for (var pair of Response.headers.entries()) { // accessing the entries
+  
+      headers.push(pair);
+    }
+    let finalAnswer = {status: status, headersJson : headers,  bodyJson :await Response.json()};
+    console.log(finalAnswer);
+    //this.setState({headers})
+    //return Response.json();
+    return finalAnswer;
+  });
+  //let data = await result.json();
+  this.props.saveData( await result);
+
+  
+};
 
   handleSubmit = e => {
     e.preventDefault();
@@ -23,7 +47,7 @@ class Form extends React.Component {
         url: this.state.url,
         method: this.state.method,
       };
-
+      this.getData();
       // Clear old settings
       let url = '';
       let method = '';
@@ -57,6 +81,7 @@ class Form extends React.Component {
             <input name='url' type='text' onChange={this.handleChangeURL} />
             <button type="submit">GO!</button>
           </label>
+          <p>Test URL for GET: https://official-joke-api.appspot.com/jokes/programming/ten</p>
           <label className="methods">
             <span className={this.state.method === 'get' ? 'active' : ''} id="get" onClick={this.handleChangeMethod}>GET</span>
             <span className={this.state.method === 'post' ? 'active' : ''} id="post" onClick={this.handleChangeMethod}>POST</span>
