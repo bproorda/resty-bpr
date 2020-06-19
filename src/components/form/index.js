@@ -8,7 +8,7 @@ class Form extends React.Component {
     super(props);
     this.state = {
       url: '',
-      method: '',
+      method: {},
       request: {},
       body: {},
     
@@ -16,9 +16,14 @@ class Form extends React.Component {
   }
 
 async getData() {
-  let result = await fetch(this.state.url)
+  let requestObj;
+  if (this.body){
+    requestObj = {method: this.state.method};
+  }
+  //let requestObj = {method: this.state.method, body: JSON.stringify(this.state.body)};
+  let result = await fetch(this.state.url, requestObj)
   .then(async function(Response) {
-    //console.log(Response);
+    
     let headers = [];
     let status = Response.status;
     for (var pair of Response.headers.entries()) { // accessing the entries
@@ -27,11 +32,9 @@ async getData() {
     }
     let finalAnswer = {status: status, headersJson : headers,  bodyJson :await Response.json()};
     console.log(finalAnswer);
-    //this.setState({headers})
-    //return Response.json();
     return finalAnswer;
   });
-  //let data = await result.json();
+ 
   this.props.saveData( await result);
 
   
