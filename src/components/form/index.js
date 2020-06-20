@@ -38,13 +38,13 @@ async getData() {
       headers.push(pair);
     }
     let finalAnswer = {status: status, headersJson : headers,  bodyJson :await Response.json()};
-    let oldHistory = JSON.parse(window.localStorage.getItem(window.localStorage.getItem('history'))) || [];
-      let newHistory = [{method: "GET", response: finalAnswer}, ...oldHistory];
-      let newHistoryString = JSON.stringify(newHistory);
-      window.localStorage.setItem('history', newHistoryString);
-      
     return finalAnswer;
   });
+ 
+  let oldHistory = JSON.parse(window.localStorage.getItem(window.localStorage.getItem('history'))) || [];
+    let newHistory = [{method: this.state.method, response: result}, ...oldHistory];
+    let newHistoryString = JSON.stringify(newHistory);
+    window.localStorage.setItem('history', newHistoryString);
  
   this.props.saveData( await result); 
 };
