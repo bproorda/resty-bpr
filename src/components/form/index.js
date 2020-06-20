@@ -17,7 +17,7 @@ class Form extends React.Component {
 
 
 
-async getData() {
+async getData(request) {
   let requestObj;
   if (this.body){
     requestObj = {method: this.state.method};
@@ -34,15 +34,15 @@ async getData() {
     let finalAnswer = {status: status, headersJson : headers,  bodyJson :await Response.json()};
     return finalAnswer;
   });
- 
-    this.saveToLocal(result);   
+  
+   await this.saveToLocal(result, request);   
  
   this.props.saveData( await result); 
 };
 
-saveToLocal(result){
+saveToLocal(result, request){
   let oldHistory = JSON.parse(window.localStorage.getItem(window.localStorage.getItem('history'))) || [];
-    let newHistory = [{method: this.state.method, url: this.state.url, response: result}, ...oldHistory];
+    let newHistory = [{method: request.method, url: request.url, response: result}, ...oldHistory];
     let newHistoryString = JSON.stringify(newHistory);
     window.localStorage.setItem('history', newHistoryString);
 }
@@ -57,7 +57,7 @@ saveToLocal(result){
         url: this.state.url,
         method: this.state.method,
       };
-      this.getData();
+      this.getData(request);
       // Clear old settings
       let url = '';
       let method = '';
