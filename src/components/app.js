@@ -32,7 +32,7 @@ class App extends React.Component {
             <Form saveData={this.getFormData} />
             <Results data={this.state.Results} />
           </Route>
-          <Route>
+          <Route path="/history">
             <History history = {this.state.History}/>
           </Route>
           <Route>
