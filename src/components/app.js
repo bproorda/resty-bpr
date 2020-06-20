@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch, Route, BrowserRouter } from 'react-router-dom';
+import { Switch, Route} from 'react-router-dom';
 import './app.scss';
 
 // Let's talk about using index.js and some other name in the component folder
@@ -28,7 +28,6 @@ class App extends React.Component {
     return (
       <React.Fragment>
         <Header />
-        <BrowserRouter>
         <Switch>
           <Route exact path="/">
             <Form saveData={this.getFormData} />
@@ -38,7 +37,6 @@ class App extends React.Component {
             404
         </Route>
         </Switch>
-        </BrowserRouter>
         <Footer />
       </React.Fragment>
     );
