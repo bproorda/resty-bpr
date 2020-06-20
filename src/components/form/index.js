@@ -52,6 +52,7 @@ saveToLocal(result, request){
       // Make an object that would be suitable for superagent
       if (this.state.method !== 'get'){
         request = {method: this.state.method, body: JSON.stringify(this.state.body)};
+        this.setState({body: ""});
       } else {
         request = {method: this.state.method};
       }
@@ -111,6 +112,7 @@ saveToLocal(result, request){
         <section className="results">
           <span className="method">{this.state.request.method}</span>
           <span className="url">{this.state.request.url}</span>
+          <span className="body">{this.state.request.body}</span>
         </section>
       </>
     );
