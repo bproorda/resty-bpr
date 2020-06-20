@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, Route } from 'react-router-dom';
 import Modal from '../modal';
-import { If } from '../if';
+import { If } from '../If';
 
 
 
@@ -20,6 +20,7 @@ class HistoryList extends React.Component {
       }
 
     render() {
+        const {showDetails} = this.state;
         const { history } = this.props;
         return (
             <>
@@ -30,7 +31,7 @@ class HistoryList extends React.Component {
                     ))}
                 </ul>
 
-                <If condition={this.State.showDetails}>
+                <If condition={showDetails}>
           <Modal title="Contact Us" onClose={this.toggleContactUsModal}>
             Google me, dummy
           </Modal>
