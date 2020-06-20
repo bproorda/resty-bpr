@@ -17,6 +17,7 @@ class App extends React.Component {
     this.state = {
       Count: 0,
       Results: {},
+      History: JSON.parse(window.localStorage.getItem('history')) || [],
     };
   }
 
@@ -30,7 +31,7 @@ class App extends React.Component {
         <Header />
         <Switch>
           <Route exact path="/">
-            <Form saveData={this.getFormData} />
+            <Form saveData={this.getFormData} history = {this.state.History} />
             <Results data={this.state.Results} />
           </Route>
           <Route>

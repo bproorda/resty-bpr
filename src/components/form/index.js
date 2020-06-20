@@ -20,18 +20,17 @@ async getData() {
   if (this.body){
     requestObj = {method: this.state.method};
   }
-  //let requestObj = {method: this.state.method, body: JSON.stringify(this.state.body)};
   let result = await fetch(this.state.url, requestObj)
   .then(async function(Response) {
     
     let headers = [];
     let status = Response.status;
-    for (var pair of Response.headers.entries()) { // accessing the entries
+    for (var pair of Response.headers.entries()) { 
   
       headers.push(pair);
     }
     let finalAnswer = {status: status, headersJson : headers,  bodyJson :await Response.json()};
-    console.log(finalAnswer);
+   
     return finalAnswer;
   });
  
