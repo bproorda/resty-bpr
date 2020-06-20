@@ -35,17 +35,17 @@ async getData() {
     return finalAnswer;
   });
  
-  let oldHistory = JSON.parse(window.localStorage.getItem(window.localStorage.getItem('history'))) || [];
-    let newHistory = [{method: this.state.method, response: result}, ...oldHistory];
-    let newHistoryString = JSON.stringify(newHistory);
-    window.localStorage.setItem('history', newHistoryString);
-
-    
+    this.saveToLocal(result);   
  
   this.props.saveData( await result); 
 };
 
-
+saveToLocal(result){
+  let oldHistory = JSON.parse(window.localStorage.getItem(window.localStorage.getItem('history'))) || [];
+    let newHistory = [{method: this.state.method, url: this.state.url, response: result}, ...oldHistory];
+    let newHistoryString = JSON.stringify(newHistory);
+    window.localStorage.setItem('history', newHistoryString);
+}
 
   handleSubmit = e => {
     e.preventDefault();
