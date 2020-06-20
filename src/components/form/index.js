@@ -15,6 +15,14 @@ class Form extends React.Component {
     };
   }
 
+
+  // saveToLocal(finalAnswer) {
+  //     let oldHistory = JSON.parse(window.localStorage.getItem(window.localStorage.getItem('history')));
+  //     let newHistory = [{method: this.state.method, response: finalAnswer}, ...oldHistory];
+  //     let newHistoryString = newHistory.JSON.stringify;
+  //     window.localStorage.setItem('history', newHistoryString);
+  // }
+
 async getData() {
   let requestObj;
   if (this.body){
@@ -30,14 +38,18 @@ async getData() {
       headers.push(pair);
     }
     let finalAnswer = {status: status, headersJson : headers,  bodyJson :await Response.json()};
-   
+    let oldHistory = JSON.parse(window.localStorage.getItem(window.localStorage.getItem('history'))) || [];
+      let newHistory = [{method: "GET", response: finalAnswer}, ...oldHistory];
+      let newHistoryString = JSON.stringify(newHistory);
+      window.localStorage.setItem('history', newHistoryString);
+      
     return finalAnswer;
   });
  
-  this.props.saveData( await result);
-
-  
+  this.props.saveData( await result); 
 };
+
+
 
   handleSubmit = e => {
     e.preventDefault();
