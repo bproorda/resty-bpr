@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link} from 'react-router-dom';
+import { Link, Route} from 'react-router-dom';
 export default function HistoryList(props) {
     
 return (
@@ -10,6 +10,9 @@ return (
                <li key={index}><b>{item.method}</b>  {item.url}      <Link to={'history/' + index}>Details</Link>  </li>
         ))}
     </ul>
+    <Route path="/history/:id">
+
+    </Route>
     </>
 );
 
