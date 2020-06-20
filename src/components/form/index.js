@@ -16,12 +16,6 @@ class Form extends React.Component {
   }
 
 
-  // saveToLocal(finalAnswer) {
-  //     let oldHistory = JSON.parse(window.localStorage.getItem(window.localStorage.getItem('history')));
-  //     let newHistory = [{method: this.state.method, response: finalAnswer}, ...oldHistory];
-  //     let newHistoryString = newHistory.JSON.stringify;
-  //     window.localStorage.setItem('history', newHistoryString);
-  // }
 
 async getData() {
   let requestObj;
@@ -45,6 +39,8 @@ async getData() {
     let newHistory = [{method: this.state.method, response: result}, ...oldHistory];
     let newHistoryString = JSON.stringify(newHistory);
     window.localStorage.setItem('history', newHistoryString);
+
+    
  
   this.props.saveData( await result); 
 };
