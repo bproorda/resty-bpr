@@ -7,7 +7,7 @@ return (
     <ul>
         {console.log(props.history)}
         {props.history.map((item, index) => (
-               <li key={index}><b>{item.method}</b>  {item.url}</li>
+               <li key={index}><b>{item.method}</b>  {item.url}      <a href={'history/' + index}>Details</a>  </li>
         ))}
     </ul>
     </>
