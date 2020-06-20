@@ -98,6 +98,11 @@ saveToLocal(result, request){
             <span className={this.state.method === 'put' ? 'active' : ''} id="put" onClick={this.handleChangeMethod}>PUT</span>
             <span className={this.state.method === 'delete' ? 'active' : ''} id="delete" onClick={this.handleChangeMethod}>DELETE</span>
           </label>
+          <label className="bodyText">
+            <span>Request Body: </span> 
+            <textarea id="bodyText" name="bodyText"
+          rows="10" cols="100" value = "Enter the body of your request here"></textarea>
+          </label>
         </form>
         <section className="results">
           <span className="method">{this.state.request.method}</span>
