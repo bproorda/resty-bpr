@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, Route } from 'react-router-dom';
 import Modal from '../modal';
+import { If } from '../if';
 
 
 
@@ -10,9 +11,13 @@ class HistoryList extends React.Component {
         super();
 
         this.state = {
-            showContactUs: false,
+            showDetails: false,
         };
     }
+
+    toggleDetailModal = () => {
+        this.setState(oldState => ({ showDetails: !oldState.showDetails }));
+      }
 
     render() {
         const { history } = this.props;
@@ -24,6 +29,13 @@ class HistoryList extends React.Component {
                         <li key={index}><b>{item.method}</b>  {item.url}      <Link to={'history/' + index}>Details</Link>  </li>
                     ))}
                 </ul>
+
+                <If condition={this.State.showDetails}>
+          <Modal title="Contact Us" onClose={this.toggleContactUsModal}>
+            Google me, dummy
+          </Modal>
+        </If>
+
                 <Route path="/history/:id" component={Modal}>
 
                 </Route>
