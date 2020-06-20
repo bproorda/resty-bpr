@@ -10,7 +10,7 @@ class Form extends React.Component {
       url: '',
       method: {},
       request: {},
-      body: {},
+      body: '',
     
     };
   }
@@ -18,11 +18,8 @@ class Form extends React.Component {
 
 
 async getData(request) {
-  let requestObj;
-  if (this.body){
-    requestObj = {method: this.state.method, mode: 'cors', cache: 'no-cache', credentials: 'same-origin'};
-  }
-  let result = await fetch(this.state.url, requestObj,)
+  let thisUrl = this.state.url;
+  let result = await fetch(thisUrl, request)
   .then(async function(Response) {
     
     let headers = [];
@@ -34,7 +31,7 @@ async getData(request) {
     let finalAnswer = {status: status, headersJson : headers,  bodyJson :await Response.json()};
     return finalAnswer;
   });
-  
+  request.url = thisUrl;
    await this.saveToLocal(result, request);   
  
   this.props.saveData( await result); 
@@ -42,7 +39,7 @@ async getData(request) {
 
 saveToLocal(result, request){
   let oldHistory = JSON.parse(window.localStorage.getItem('history')) || [];
-    let newHistory = [{method: request.method, url: request.url, response: result}, ...oldHistory];
+    let newHistory = [{method: request.method, url: request.url, requestBody: request.body, response: result}, ...oldHistory];
     let newHistoryString = JSON.stringify(newHistory);
     window.localStorage.setItem('history', newHistoryString);
 }
@@ -51,12 +48,14 @@ saveToLocal(result, request){
     e.preventDefault();
 
     if ( this.state.url && this.state.method ) {
-
+      let request;
       // Make an object that would be suitable for superagent
-      let request = {
-        url: this.state.url,
-        method: this.state.method,
-      };
+      if (this.state.method !== 'get'){
+        request = {method: this.state.method, body: JSON.stringify(this.state.body)};
+      } else {
+        request = {method: this.state.method};
+      }
+      this.setState({request});
       this.getData(request);
       // Clear old settings
       let url = '';
@@ -81,6 +80,11 @@ saveToLocal(result, request){
     const method = e.target.id;
     this.setState({ method });
   };
+  // handleChangeBody =e => {
+  //   let body = e.target.value;
+  //   this.setState({body});
+  //   console.log(this.state.body);
+  // }
 
   render() {
     return (
@@ -101,7 +105,7 @@ saveToLocal(result, request){
           <label className="bodyText">
             <span>Request Body: </span> 
             <textarea id="bodyText" name="bodyText"
-          rows="10" cols="100" value = "Enter the body of your request here"></textarea>
+          rows="10" cols="100" ></textarea>
           </label>
         </form>
         <section className="results">
