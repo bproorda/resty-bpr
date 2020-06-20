@@ -52,7 +52,7 @@ saveToLocal(result, request){
       // Make an object that would be suitable for superagent
       if (this.state.method !== 'get'){
         request = {method: this.state.method, body: JSON.stringify(this.state.body)};
-        this.setState({body: ""});
+        //this.setState({body: ""});
       } else {
         request = {method: this.state.method};
       }
@@ -81,11 +81,10 @@ saveToLocal(result, request){
     const method = e.target.id;
     this.setState({ method });
   };
-  // handleChangeBody =e => {
-  //   let body = e.target.value;
-  //   this.setState({body});
-  //   console.log(this.state.body);
-  // }
+  handleChangeBody =e => {
+    let body = e.target.value;
+    this.setState({body});
+  }
 
   render() {
     return (
@@ -106,13 +105,13 @@ saveToLocal(result, request){
           <label className="bodyText">
             <span>Request Body: </span> 
             <textarea id="bodyText" name="bodyText"
-          rows="10" cols="100" ></textarea>
+          rows="10" cols="100" onChange={this.handleChangeBody}></textarea>
           </label>
         </form>
         <section className="results">
           <span className="method">{this.state.request.method}</span>
           <span className="url">{this.state.request.url}</span>
-          <span className="body">{this.state.request.body}</span>
+          <span className="body">{this.state.body}</span>
         </section>
       </>
     );
