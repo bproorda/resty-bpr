@@ -5,10 +5,9 @@ export default function HistoryList(props) {
 return (
     <>
     <ul>
-        {props.history.map((item) => (
-            <span>
-               <p><b>{item.method}</b>  {item.url}</p>
-            </span>
+        {console.log(props.history)}
+        {props.history.map((item, index) => (
+               <li key={index}><b>{item.method}</b>  {item.url}</li>
         ))}
     </ul>
     </>
