@@ -20,9 +20,9 @@ class Form extends React.Component {
 async getData(request) {
   let requestObj;
   if (this.body){
-    requestObj = {method: this.state.method};
+    requestObj = {method: this.state.method, mode: 'cors', cache: 'no-cache', credentials: 'same-origin'};
   }
-  let result = await fetch(this.state.url, requestObj)
+  let result = await fetch(this.state.url, requestObj,)
   .then(async function(Response) {
     
     let headers = [];
@@ -41,7 +41,7 @@ async getData(request) {
 };
 
 saveToLocal(result, request){
-  let oldHistory = JSON.parse(window.localStorage.getItem(window.localStorage.getItem('history'))) || [];
+  let oldHistory = JSON.parse(window.localStorage.getItem('history')) || [];
     let newHistory = [{method: request.method, url: request.url, response: result}, ...oldHistory];
     let newHistoryString = JSON.stringify(newHistory);
     window.localStorage.setItem('history', newHistoryString);
