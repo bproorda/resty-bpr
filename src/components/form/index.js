@@ -8,46 +8,56 @@ class Form extends React.Component {
     super(props);
     this.state = {
       url: '',
-      method: '',
+      method: {},
       request: {},
-      body: {},
+      body: '',
     
     };
   }
 
-async getData() {
-  let result = await fetch(this.state.url)
+
+
+async getData(request) {
+  let thisUrl = this.state.url;
+  let result = await fetch(thisUrl, request)
   .then(async function(Response) {
-    //console.log(Response);
+    
     let headers = [];
     let status = Response.status;
-    for (var pair of Response.headers.entries()) { // accessing the entries
+    for (var pair of Response.headers.entries()) { 
   
       headers.push(pair);
     }
     let finalAnswer = {status: status, headersJson : headers,  bodyJson :await Response.json()};
-    console.log(finalAnswer);
-    //this.setState({headers})
-    //return Response.json();
     return finalAnswer;
   });
-  //let data = await result.json();
-  this.props.saveData( await result);
-
-  
+  request.url = thisUrl;
+   await this.saveToLocal(result, request);   
+ 
+  this.props.saveData( await result); 
 };
+
+saveToLocal(result, request){
+  let oldHistory = JSON.parse(window.localStorage.getItem('history')) || [];
+    let newHistory = [{method: request.method, url: request.url, requestBody: request.body, response: result}, ...oldHistory];
+    let newHistoryString = JSON.stringify(newHistory);
+    window.localStorage.setItem('history', newHistoryString);
+}
 
   handleSubmit = e => {
     e.preventDefault();
 
     if ( this.state.url && this.state.method ) {
-
+      let request;
       // Make an object that would be suitable for superagent
-      let request = {
-        url: this.state.url,
-        method: this.state.method,
-      };
-      this.getData();
+      if (this.state.method !== 'get'){
+        request = {method: this.state.method, body: JSON.stringify(this.state.body)};
+        //this.setState({body: ""});
+      } else {
+        request = {method: this.state.method};
+      }
+      this.setState({request});
+      this.getData(request);
       // Clear old settings
       let url = '';
       let method = '';
@@ -71,6 +81,10 @@ async getData() {
     const method = e.target.id;
     this.setState({ method });
   };
+  handleChangeBody =e => {
+    let body = e.target.value;
+    this.setState({body});
+  }
 
   render() {
     return (
@@ -88,10 +102,16 @@ async getData() {
             <span className={this.state.method === 'put' ? 'active' : ''} id="put" onClick={this.handleChangeMethod}>PUT</span>
             <span className={this.state.method === 'delete' ? 'active' : ''} id="delete" onClick={this.handleChangeMethod}>DELETE</span>
           </label>
+          <label className="bodyText">
+            <span>Request Body: </span> 
+            <textarea id="bodyText" name="bodyText"
+          rows="10" cols="100" onChange={this.handleChangeBody}></textarea>
+          </label>
         </form>
         <section className="results">
           <span className="method">{this.state.request.method}</span>
           <span className="url">{this.state.request.url}</span>
+          <span className="body">{this.state.body}</span>
         </section>
       </>
     );

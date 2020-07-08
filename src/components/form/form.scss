@@ -6,6 +6,11 @@ form {
   margin: auto;
   width: 200px;
 
+  #bodyText {
+    display: block;
+    width:  500px;
+  }
+
   label {
     display: flex;
     margin: 1rem 0;
